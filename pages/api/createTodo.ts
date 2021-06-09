@@ -5,12 +5,17 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { table, getMinifiedRecords } from './utils/Airtable';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
+  const { description } = req.body;
   try {
-    const records = await table.select({}).firstPage();
-    const minifiedRecords = getMinifiedRecords(records);
+    const createdRecords = await table.create([{ fields: { description } }]);
+    const createdRecord = {
+      id: createdRecords[0].id,
+      fields: createdRecords[0].fields,
+    };
     res.statusCode = 200;
-    res.json(minifiedRecords);
+    res.json(createdRecord);
   } catch (err) {
+    console.error(err);
     res.statusCode = 500;
     res.json({ msg: 'Something went Wrong' });
   }
