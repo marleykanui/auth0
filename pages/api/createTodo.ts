@@ -2,7 +2,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 // AirTable Helpers
-import { table, getMinifiedRecords } from './utils/Airtable';
+import { table } from './utils/Airtable';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const { description } = req.body;
