@@ -5,6 +5,7 @@ import Head from 'next/head';
 
 // Components
 import Navbar from '../components/Navbar';
+import Todo from '../components/Todo';
 
 // API Utils
 import { table, getMinifiedRecords } from './api/utils/Airtable';
@@ -36,27 +37,36 @@ const Auth0Landing: FC<TodosProps> = ({ initialTodos }) => {
       <Navbar />
       <main>
         <h1>Auth0 - Kanui</h1>
-        {initialTodos.map(({ id, fields }) => {
-          return (
-            <div key={id}>
-              <h1>{id}</h1>
-              <h1>{fields.description}</h1>
-              {fields.completed ? <h1>Completed</h1> : <h1>Not Completed</h1>}
-            </div>
-          );
-        })}
+        <ul className="flex flex-col">
+          {initialTodos.map((todo) => {
+            return (
+              <div key={todo.id} className="p-2">
+                <Todo id={todo.id} fields={todo.fields} />
+              </div>
+            );
+          })}
+        </ul>
       </main>
     </div>
   );
 };
 
 export const getServerSideProps = async (context) => {
-  const todos = await table.select({}).firstPage();
-  return {
-    props: {
-      initialTodos: getMinifiedRecords(todos),
-    },
-  };
+  try {
+    const todos = await table.select({}).firstPage();
+    return {
+      props: {
+        initialTodos: getMinifiedRecords(todos),
+      },
+    };
+  } catch (err) {
+    console.error(err);
+    return {
+      props: {
+        err: 'could not locate your data please contact us',
+      },
+    };
+  }
 };
 
 export default Auth0Landing;
