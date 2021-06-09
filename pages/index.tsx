@@ -1,6 +1,9 @@
 // Next
 import Head from 'next/head';
 
+// Components
+import Navbar from '../components/Navbar';
+
 // React Types
 import { FC } from 'react';
 
@@ -11,6 +14,7 @@ const Auth0Landing: FC = () => {
         <title>Auth0 - Kanui</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <Navbar />
       <main>
         <h1>Auth0 - Kanui</h1>
       </main>
