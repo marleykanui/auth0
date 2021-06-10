@@ -18,7 +18,8 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "pages/api/utils/Airtable.ts"
+    "pages/api/utils/Airtable.js",
+    "context/TodosContext.js"
   ],
   "exclude": ["node_modules"]
 }

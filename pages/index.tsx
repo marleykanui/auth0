@@ -1,7 +1,11 @@
 // React
-import { useEffect } from 'react';
+import { useEffect, useContext } from 'react';
+
 // Next
 import Head from 'next/head';
+
+// Context
+import { TodosContext } from '../context/TodosContext';
 
 // Components
 import Navbar from '../components/Navbar';
@@ -28,6 +32,12 @@ interface TodosProps {
 }
 
 const Auth0Landing: FC<TodosProps> = ({ initialTodos }) => {
+  const { todos, setTodos } = useContext(TodosContext);
+
+  useEffect(() => {
+    setTodos(initialTodos);
+  }, []);
+
   return (
     <div>
       <Head>
@@ -38,13 +48,14 @@ const Auth0Landing: FC<TodosProps> = ({ initialTodos }) => {
       <main>
         <h1>Auth0 - Kanui</h1>
         <ul className="flex flex-col">
-          {initialTodos.map((todo) => {
-            return (
-              <div key={todo.id} className="p-2">
-                <Todo id={todo.id} fields={todo.fields} />
-              </div>
-            );
-          })}
+          {todos &&
+            todos.map((todo) => {
+              return (
+                <div key={todo.id} className="p-2">
+                  <Todo id={todo.id} fields={todo.fields} />
+                </div>
+              );
+            })}
         </ul>
       </main>
     </div>

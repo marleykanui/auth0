@@ -1,3 +1,5 @@
+// Provider
+import { TodosProvider } from '../context/TodosContext';
 // Styles
 import '../styles/globals.scss';
 
@@ -9,9 +11,11 @@ import type { AppProps } from 'next/app';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <div className="container mx-auto my-10 max-w-xl">
-      <Component {...pageProps} />
-    </div>
+    <TodosProvider>
+      <div className="container mx-auto my-10 max-w-xl">
+        <Component {...pageProps} />
+      </div>
+    </TodosProvider>
   );
 }
 
